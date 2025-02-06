@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'PixeloidSans';
+    src: url('PixeloidSans.woff2') format('woff2');
+}
+
+button {
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #5C94FC;
+}
+
+h1 {
+    font-family: PixeloidSans, serif;
+    text-align: center;
+    color: white;
+}
+
+section.cards {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+article {
+    align-items: center;
+    text-align: center;
+    border: black 1px solid;
+    width: 20vw;
+    background-color: brown;
+    height: 70vh;
+}
+
+.floor {
+    position: absolute;
+    bottom: 0;
+    background-color: chocolate;
+    width: 99.1vw;
+    height: 10vh;
+}
+
+p, h2, li {
+    font-family: sans-serif;
+    color: white;
+}
+
+span {
+    font-family: PixeloidSans, sans-serif;
+    color: white;
+}
+
+li {
+
+    padding: 0;
+    list-style: none;
+}
+
+section img:nth-of-type(1) {
+    width: 16em;
+    height: auto;
+}
+
+ul {
+    justify-content: center;
+    gap: 1em;
+    display: flex;
+    padding: 0;
+}
+
+article.container-card {
+    /* height: 100%; */
+    /* width: 100%; */
+}
+
+section.container-back {
+    visibility: hidden;
+}
+
+section.container-front {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section.container-front span {
+    font-size: 10rem;
+}
+
+.display {
+    visibility: visible;
+
+}
+
+.hide {
+    visibility: hidden;
+}
