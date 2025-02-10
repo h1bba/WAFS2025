@@ -90,9 +90,10 @@ let positionX = 0; // Startpositie
 let positionY = 0; // Startpositie
 let isJumping = false; // Voorkomt dubbele sprongen
 let isFacingRight = true;
+let isWalking = false;
 
-const normalImage = "/images/MarioStanding.png";
-const jumpImage = "/images/MarioJumping.png";
+const normalImage = "/images/UfukStanding.png";
+const jumpImage = "/images/UfukJumping.png";
 
 
 
@@ -106,6 +107,8 @@ document.addEventListener("keydown", (event) => {
             player.style.transform = "scaleX(-1)"; // Spiegel de afbeelding
             isFacingRight = false; // Speler kijkt nu naar links
         }
+        isWalking = true;
+        player.src = "/images/UfukWalking.gif"
     }
 
     if (event.key === "ArrowRight") {
@@ -114,34 +117,49 @@ document.addEventListener("keydown", (event) => {
         if (!isFacingRight) {
             player.style.transform = "scaleX(1)"; // Zet de afbeelding weer normaal
             isFacingRight = true; // Speler kijkt nu naar rechts
-        }
 
+        }
+        isWalking = true;
+        player.src = "/images/UfukWalking.gif"
 
     }
     if (event.key === "ArrowUp" && !isJumping) {
         player.src = jumpImage;
-        // player.classList.toggle("marioJumpAni");
+        player.classList.toggle("marioJumpAni");
         isJumping = true; // Zet de sprong op actief
-        positionY += step * 15;
-        player.style.bottom = positionY + "px"; // Pas de positie toe
+        // positionY += step * 15;
+        // player.style.bottom = positionY + "px"; // Pas de positie toe
 
     }
 
+    // Luister naar het einde van de animatie voordat hij opnieuw gebruikt kan worden
+    player.addEventListener("animationend", function () {
+        player.classList.remove("marioJumpAni");
+        isJumping = false; // Allow jumping again
+    });
 
     player.style.left = positionX + "px"; // Pas de positie toe
 
 
-    //css class voor de jump 
-    // playerJump = player.querySelector("marioJumpAni");
-    // player.addEventListener("animationend", isJumping = false);
+    document.addEventListener("keyup", function (event) {
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp") {
+            isWalking = false;
+            isJumping = false
+            player.src = "/images/UfukStanding.png"; // Change back to standing image
+        }
+    });
+
+
+    // block laten breken
+
 
     // Zorg dat de speler na 300ms weer terugkeert naar de originele positie
-    setTimeout(() => {
-        player.src = normalImage;
-        // player.classList.toggle("marioJumpAni");
-        positionY = 46; // Terug naar standaard Y-positie
-        player.style.bottom = positionY + "px";
-    }, 150);
-    isJumping = false;
+    // setTimeout(() => {
+    //     player.src = normalImage;
+    //     // player.classList.toggle("marioJumpAni");
+    //     positionY = 46; // Terug naar standaard Y-positie
+    //     player.style.bottom = positionY + "px";
+    // }, 1000);
+    // isJumping = false;
 
 });

@@ -10,7 +10,7 @@
     }
 
     50% {
-        bottom: 15vh;
+        bottom: 21vh;
     }
 
     100% {
@@ -144,5 +144,6 @@ section.container-front span {
 
 .marioJumpAni {
     animation-name: marioJump;
-    animation-duration: 1s;
+    animation-duration: .5s;
+    animation-iteration-count: 1;
 }
