@@ -12,8 +12,10 @@
 
 // CHATGPT prompt: ik wil graag dat wanneer de gebruiker klikt op een card-container dat de front onzichtbaar wordt en de back zichtbaar, alleen momenteel als hij de classList toggle doet, wilt hij niet de property overwriten
 
+const cards = document.querySelectorAll(".container-card");
+
+
 document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".container-card");
 
     cards.forEach(card => {
         card.addEventListener("click", () => {
@@ -91,6 +93,12 @@ let positionY = 0; // Startpositie
 let isJumping = false; // Voorkomt dubbele sprongen
 let isFacingRight = true;
 let isWalking = false;
+let screenQuarter = 1;
+
+// de offset is nodig om de kwart waar de speler zich in bevindt uit te rekenen
+const playerPosition = player.offsetLeft;
+const screenWidth = window.innerWidth;
+
 
 const normalImage = "/images/UfukStanding.png";
 const jumpImage = "/images/UfukJumping.png";
@@ -103,6 +111,8 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
         // Beweeg naar links
         positionX -= step;
+
+
         if (isFacingRight) {
             player.style.transform = "scaleX(-1)"; // Spiegel de afbeelding
             isFacingRight = false; // Speler kijkt nu naar links
@@ -114,10 +124,16 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight") {
         // Beweeg naar rechts
         positionX += step;
+
+        // als positieX groter is dan een kwart van de schermbreedte, tel 1 op bij screenQuarter
+        // if (positionX > (screenWidth / 4)) {
+        //     screenQuarter++
+        //     console.log(screenQuarter);
+        // }
+
         if (!isFacingRight) {
             player.style.transform = "scaleX(1)"; // Zet de afbeelding weer normaal
             isFacingRight = true; // Speler kijkt nu naar rechts
-
         }
         isWalking = true;
         player.src = "/images/UfukWalking.gif"
@@ -126,6 +142,60 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowUp" && !isJumping) {
         player.src = jumpImage;
         player.classList.toggle("marioJumpAni");
+
+        console.log(positionX);
+
+
+        if (positionX < screenWidth / 4) {
+            // eerste kwart
+            screenQuarter = 1;
+        } else if (positionX < (screenWidth / 4) * 2) {
+            // tweede kwart
+            screenQuarter = 2;
+        } else if (positionX < (screenWidth / 4) * 3) {
+            // derde kwart
+            screenQuarter = 3;
+        } else {
+            // vierde kwart
+            screenQuarter = 4;
+        }
+
+        console.log(screenQuarter);
+
+        let cardIndex = screenQuarter - 1;
+
+
+        // kaarten displayen aan de hand van de quarter waar de speler zich bevindt.
+        cards.forEach((card, index) => {
+            const front = card.querySelector(".container-front");
+            const back = card.querySelector(".container-back");
+            if (index === cardIndex) {
+                setTimeout(() => {
+
+                    front.style.display = "none";
+                    back.style.display = "flex";
+                }, 100);
+                // set timeout gebruik https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout
+                setTimeout(() => {
+                    card.classList.add('shakeAni');
+
+                }, 100);
+
+            } else {
+                front.style.display = "flex";
+                back.style.display = "none";
+                card.classList.remove('shakeAni')
+            }
+        });
+
+
+        // console.log(positionX);
+        // console.log(screenWidth / 4);
+        // if (positionX > (screenWidth / 4)) {
+        //     screenQuarter++
+        //     console.log(screenQuarter);
+        // }
+
         isJumping = true; // Zet de sprong op actief
         // positionY += step * 15;
         // player.style.bottom = positionY + "px"; // Pas de positie toe
@@ -140,7 +210,6 @@ document.addEventListener("keydown", (event) => {
 
     player.style.left = positionX + "px"; // Pas de positie toe
 
-
     document.addEventListener("keyup", function (event) {
         if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp") {
             isWalking = false;
@@ -148,6 +217,7 @@ document.addEventListener("keydown", (event) => {
             player.src = "/images/UfukStanding.png"; // Change back to standing image
         }
     });
+
 
 
     // block laten breken
