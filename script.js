@@ -181,7 +181,7 @@ document.addEventListener("keydown", (event) => {
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/animationend_event
     player.addEventListener("animationend", function () {
         player.classList.remove("marioJumpAni");
-        isJumping = false; // Allow jumping again
+        isJumping = false; // animation reset
     });
 
     player.style.left = positionX + "px"; // Pas de positie toe
@@ -233,8 +233,8 @@ jumpButton.addEventListener('click', function () {
 
     player.addEventListener("animationend", function () {
         player.classList.remove("marioJumpAni");
-        isJumping = false; // Allow jumping again
-        player.src = "/images/UfukStanding.png"; // Reset image
+        isJumping = false; // zodat de animatie weer kan resetten
+        player.src = "/images/UfukStanding.png"; // reset image
     });
 
     let cardIndex = screenQuarter - 1;

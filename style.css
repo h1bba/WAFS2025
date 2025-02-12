@@ -194,6 +194,11 @@ h2 {
     font-weight: 400;
 }
 
+h3 {
+    font-weight: 400;
+    font-family: sans-serif;
+}
+
 span.textUBA {
     color: black;
     font-family: sans-serif;
