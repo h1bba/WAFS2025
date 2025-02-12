@@ -65,6 +65,8 @@
     }
 }
 
+
+
 button {
     margin: 0 auto;
     text-align: center;
@@ -86,7 +88,6 @@ h1 {
 section.cards {
     display: flex;
     justify-content: space-around;
-
 
 }
 
@@ -114,8 +115,6 @@ p, h2, li {
 
 p, ul, h2 {
     margin: .5em;
-    /* padding-top: 8px; */
-    /* padding-top: 8px; */
 
 }
 
@@ -129,6 +128,8 @@ span {
     visibility: hidden;
 }
 
+
+/* class om de kaarten te tonen */
 .display {
     display: block;
     visibility: visible;
@@ -142,9 +143,8 @@ li {
 }
 
 section>article:nth-of-type(1) img:nth-of-type(1) {
-    width: 100%;
-    /* height: auto; */
-    /* aspect-ratio: 1/1; */
+    margin: 0 auto;
+    width: 75%;
 }
 
 ul {
@@ -154,6 +154,7 @@ ul {
     padding-left: 0;
 }
 
+/* class van de container */
 article.container-card {
     transition: 1s;
 
@@ -163,6 +164,7 @@ article.container-card {
     /* width: 100%; */
 }
 
+/* class van de container info/resultaten */
 section.container-back {
     transition: 1s;
 
@@ -172,7 +174,7 @@ section.container-back {
     position: relative;
     display: none;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     background-color: gold;
     background-image: url();
     padding: 1em;
@@ -197,11 +199,6 @@ span.textUBA {
     font-family: sans-serif;
     font-weight: 700;
 }
-
-/* section>article:nth-of-type(2) section {
-    gap: 1em;
-
-} */
 
 section>article:nth-of-type(3) section:nth-of-type(2) p {
     margin: .3em auto;
@@ -245,4 +242,86 @@ section.container-front span {
     animation-delay: 1s;
     animation: shake .3s;
     animation-iteration-count: 1;
+}
+
+.cracked {
+    background-image: url(/images/crackedpattern.png);
+    background-size: cover;
+}
+
+.overflowhidden {
+    /* overflow: hidden; */
+    width: 100vw;
+    height: 33em;
+}
+
+section.mobile-buttons {
+    display: none;
+}
+
+@media screen and (max-width: 767px) {
+    section.mobile-buttons {
+        transition: 1s;
+        display: flex;
+    }
+
+    section.mobile-buttons button {
+        padding: 1em 1em 1em 1em;
+    }
+
+
+    html {
+        overflow: hidden;
+        overflow-anchor: hidden;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    section.cards {
+        transition: .5s ease;
+
+        justify-content: start;
+        flex-direction: row;
+
+        margin-left: 3em;
+        top: 8em;
+        gap: 2em;
+    }
+
+    .container-card {
+        width: 20em;
+
+        height: fit-content;
+    }
+
+    section.container-front, section.container-back {
+        height: 32em;
+        width: 20em;
+    }
+
+    .floor {
+        position: fixed;
+        bottom: 0;
+    }
+
+    h1 {
+        justify-content: center;
+        text-align: center;
+        margin: 1em auto;
+        display: flex;
+        width: 10em;
+    }
+
+    .player {
+        bottom: 5vh;
+    }
+
 }

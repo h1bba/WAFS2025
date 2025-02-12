@@ -3,12 +3,6 @@
 
 // bron voor logica https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
 
-// let cardInfo = document.querySelector("section.container-back");
-// let cardMystery = document.querySelector("section.container-front");
-// let cardInside = document.querySelector("article").addEventListener("click", () => {
-//     cardInfo.classList.toggle("display");
-//     cardMystery.classList.toggle("hide");
-// });
 
 // CHATGPT prompt: ik wil graag dat wanneer de gebruiker klikt op een card-container dat de front onzichtbaar wordt en de back zichtbaar, alleen momenteel als hij de classList toggle doet, wilt hij niet de property overwriten
 
@@ -125,12 +119,6 @@ document.addEventListener("keydown", (event) => {
         // Beweeg naar rechts
         positionX += step;
 
-        // als positieX groter is dan een kwart van de schermbreedte, tel 1 op bij screenQuarter
-        // if (positionX > (screenWidth / 4)) {
-        //     screenQuarter++
-        //     console.log(screenQuarter);
-        // }
-
         if (!isFacingRight) {
             player.style.transform = "scaleX(1)"; // Zet de afbeelding weer normaal
             isFacingRight = true; // Speler kijkt nu naar rechts
@@ -162,6 +150,7 @@ document.addEventListener("keydown", (event) => {
 
         console.log(screenQuarter);
 
+
         let cardIndex = screenQuarter - 1;
 
 
@@ -180,25 +169,10 @@ document.addEventListener("keydown", (event) => {
                     card.classList.add('shakeAni');
 
                 }, 100);
-
-            } else {
-                front.style.display = "flex";
-                back.style.display = "none";
-                card.classList.remove('shakeAni')
             }
         });
 
-
-        // console.log(positionX);
-        // console.log(screenWidth / 4);
-        // if (positionX > (screenWidth / 4)) {
-        //     screenQuarter++
-        //     console.log(screenQuarter);
-        // }
-
         isJumping = true; // Zet de sprong op actief
-        // positionY += step * 15;
-        // player.style.bottom = positionY + "px"; // Pas de positie toe
 
     }
 
@@ -218,18 +192,70 @@ document.addEventListener("keydown", (event) => {
         }
     });
 
+});
 
 
-    // block laten breken
+
+// Mobiel
+
+let translateXValue = 0;
+
+const vorigeButton = document.getElementById('vorige');
+const volgendeButton = document.getElementById('volgende');
+const jumpButton = document.getElementById('jump');
+const sectionCards = document.getElementsByClassName('cards')[0];
+
+vorigeButton.addEventListener('click', function () {
+    if (screenQuarter === 1) {
+        return;
+    } else {
+        screenQuarter -= 1;
+        translateXValue += 352; //20em + de 32px voor gap
+        sectionCards.style.transform = `translateX(${translateXValue}px)`;
+    }
+});
+
+volgendeButton.addEventListener('click', function () {
+    if (screenQuarter === 4) {
+        return;
+    } else {
+        screenQuarter += 1;
+        translateXValue -= 352;
+        sectionCards.style.transform = `translateX(${translateXValue}px)`;
+    }
+});
+
+jumpButton.addEventListener('click', function () {
+    player.src = jumpImage;
+    player.classList.toggle("marioJumpAni");
+
+    player.addEventListener("animationend", function () {
+        player.classList.remove("marioJumpAni");
+        isJumping = false; // Allow jumping again
+        player.src = "/images/UfukStanding.png"; // Reset image
+    });
+
+    let cardIndex = screenQuarter - 1;
 
 
-    // Zorg dat de speler na 300ms weer terugkeert naar de originele positie
-    // setTimeout(() => {
-    //     player.src = normalImage;
-    //     // player.classList.toggle("marioJumpAni");
-    //     positionY = 46; // Terug naar standaard Y-positie
-    //     player.style.bottom = positionY + "px";
-    // }, 1000);
-    // isJumping = false;
+    // kaarten displayen aan de hand van de quarter waar de speler zich bevindt.
+    cards.forEach((card, index) => {
+        const front = card.querySelector(".container-front");
+        const back = card.querySelector(".container-back");
+        if (index === cardIndex) {
+            setTimeout(() => {
+
+                front.style.display = "none";
+                back.style.display = "flex";
+            }, 100);
+            // set timeout gebruik https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout
+            setTimeout(() => {
+                card.classList.add('shakeAni');
+
+            }, 100);
+        }
+    });
+
 
 });
+
