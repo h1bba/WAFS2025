@@ -50,6 +50,7 @@ async function fetchCryptoPrices() {
         // Loop door de lijst met symbolen en update de bijbehorende HTML elementen
         symbols.forEach((symbol, index) => {
             // Zoek de juiste crypto in de API data
+            // prompt: CHATGPT: how would i pare the symbols and ids
             const cryptoData = data.find(item => item.symbol === symbol);
 
             // Controleer of de prijs bestaat en toon deze
@@ -57,6 +58,7 @@ async function fetchCryptoPrices() {
                 // Verwijdert 'USDT' uit de naam
                 const coinName = symbol.replace('USDT', '');
                 // Zet de prijs om naar 2 decimalen
+                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed
                 const price = Number(cryptoData.price).toFixed(2);
                 // Replace de HTML contents met de crypto coin naam - de "USDT" en stopt de prijs er achter 
                 document.getElementById(ids[index]).textContent = `${coinName}: $${price}`;
@@ -64,14 +66,14 @@ async function fetchCryptoPrices() {
         });
     } catch (error) {
         // Toon een foutmelding in de console als het misgaat
-        console.error('Fout bij het ophalen van crypto prijzen:', error);
+        console.error('Prijzen kunnen niet geladen worden', error);
     }
 }
 
 // Roep de functie 1 keer aan bij het laden van de pagina
 fetchCryptoPrices();
 
-// Stel een interval in om de prijzen elke 10 seconden bij te werken
+// interval/timeout om de prijzen elke 10 seconden bij te refreshen
 setInterval(fetchCryptoPrices, 10000);
 
 
@@ -80,14 +82,13 @@ setInterval(fetchCryptoPrices, 10000);
 // Selecteer de speler correct
 const player = document.querySelector(".player");
 
-// Zorg ervoor dat de speler een geldige `left`-waarde heeft
-player.style.position = "absolute"; // Zorg dat 'left' werkt
+player.style.position = "absolute"; // Zorgt dat offset van "left" werkt
 let positionX = 0; // Startpositie
 let positionY = 0; // Startpositie
 let isJumping = false; // Voorkomt dubbele sprongen
 let isFacingRight = true;
 let isWalking = false;
-let screenQuarter = 1;
+let screenQuarter = 1; // Voor het berekenen van welke kaart open moet
 
 // de offset is nodig om de kwart waar de speler zich in bevindt uit te rekenen
 const playerPosition = player.offsetLeft;
@@ -177,6 +178,7 @@ document.addEventListener("keydown", (event) => {
     }
 
     // Luister naar het einde van de animatie voordat hij opnieuw gebruikt kan worden
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/animationend_event
     player.addEventListener("animationend", function () {
         player.classList.remove("marioJumpAni");
         isJumping = false; // Allow jumping again
@@ -198,12 +200,12 @@ document.addEventListener("keydown", (event) => {
 
 // Mobiel
 
-let translateXValue = 0;
+let translateXValue = 0; // nodig voor het "swipen" van de kaarten
 
 const vorigeButton = document.getElementById('vorige');
 const volgendeButton = document.getElementById('volgende');
 const jumpButton = document.getElementById('jump');
-const sectionCards = document.getElementsByClassName('cards')[0];
+const sectionCards = document.getElementsByClassName('cards')[0]; // [0] van CHATGPT: "i get the error sectionCards is undefined", 0 i voor de index wat nodig is om de kaarten te offsetten
 
 vorigeButton.addEventListener('click', function () {
     if (screenQuarter === 1) {
