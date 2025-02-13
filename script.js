@@ -95,8 +95,8 @@ const playerPosition = player.offsetLeft;
 const screenWidth = window.innerWidth;
 
 
-const normalImage = "/images/UfukStanding.png";
-const jumpImage = "/images/UfukJumping.png";
+const normalImage = "images/UfukStanding.png";
+const jumpImage = "images/UfukJumping.png";
 
 
 
@@ -190,7 +190,8 @@ document.addEventListener("keydown", (event) => {
         if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp") {
             isWalking = false;
             isJumping = false
-            player.src = "images/UfukStanding.png"; // Change back to standing image
+            player.src = normalImage; // reset image
+
         }
     });
 
@@ -234,7 +235,7 @@ jumpButton.addEventListener('click', function () {
     player.addEventListener("animationend", function () {
         player.classList.remove("marioJumpAni");
         isJumping = false; // zodat de animatie weer kan resetten
-        player.src = "images/UfukStanding.png"; // reset image
+        player.src = normalImage; // reset image
     });
 
     let cardIndex = screenQuarter - 1;
