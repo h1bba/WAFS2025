@@ -113,7 +113,7 @@ document.addEventListener("keydown", (event) => {
             isFacingRight = false; // Speler kijkt nu naar links
         }
         isWalking = true;
-        player.src = "/images/UfukWalking.gif"
+        player.src = "images/UfukWalking.gif"
     }
 
     if (event.key === "ArrowRight") {
@@ -125,7 +125,7 @@ document.addEventListener("keydown", (event) => {
             isFacingRight = true; // Speler kijkt nu naar rechts
         }
         isWalking = true;
-        player.src = "/images/UfukWalking.gif"
+        player.src = "images/UfukWalking.gif"
 
     }
     if (event.key === "ArrowUp" && !isJumping) {
@@ -190,7 +190,7 @@ document.addEventListener("keydown", (event) => {
         if (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp") {
             isWalking = false;
             isJumping = false
-            player.src = "/images/UfukStanding.png"; // Change back to standing image
+            player.src = "images/UfukStanding.png"; // Change back to standing image
         }
     });
 
@@ -234,7 +234,7 @@ jumpButton.addEventListener('click', function () {
     player.addEventListener("animationend", function () {
         player.classList.remove("marioJumpAni");
         isJumping = false; // zodat de animatie weer kan resetten
-        player.src = "/images/UfukStanding.png"; // reset image
+        player.src = "images/UfukStanding.png"; // reset image
     });
 
     let cardIndex = screenQuarter - 1;
