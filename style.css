@@ -184,7 +184,7 @@ section.container-back {
 section>article:nth-of-type(2) img {
     text-align: center;
     margin: auto;
-    width: 75%;
+    width: 65%;
     border: 4px solid black;
 
 }
